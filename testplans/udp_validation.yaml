@@ -1,0 +1,47 @@
+# UDP-focused validation — requires local UDP echo on 9001 (python main.py serve --udp)
+
+suite: udp_validation
+version: "1.0"
+
+tests:
+  - test_id: UDP-LAT-001
+    name: UDP latency sampling
+    description: Multiple round-trips on one socket; collects min/avg/max style metrics.
+    protocol: UDP
+    test_type: latency
+    target_host: "127.0.0.1"
+    target_port: 9001
+    timeout: 3.0
+    packet_count: 10
+    payload_size: 64
+    expected_result: success
+    retry_count: 0
+    enabled: true
+
+  - test_id: UDP-LOSS-001
+    name: UDP bulk transfer sanity
+    description: Larger batch to surface loss or reordering (lab qualification style).
+    protocol: UDP
+    test_type: roundtrip
+    target_host: "127.0.0.1"
+    target_port: 9001
+    timeout: 5.0
+    packet_count: 40
+    payload_size: 1024
+    expected_result: success
+    retry_count: 1
+    enabled: true
+
+  - test_id: UDP-NEG-001
+    name: Closed UDP port (no listener)
+    description: Negative test — expect timeout/no reply on unused port.
+    protocol: UDP
+    test_type: invalid_port
+    target_host: "127.0.0.1"
+    target_port: 59998
+    timeout: 2.0
+    packet_count: 1
+    payload_size: 32
+    expected_result: success
+    retry_count: 0
+    enabled: true

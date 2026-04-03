@@ -1,0 +1,20 @@
+{
+  "suite": "minimal_json",
+  "tests": [
+    {
+      "test_id": "JSON-TCP-001",
+      "name": "TCP connectivity (JSON plan)",
+      "description": "Minimal JSON test plan example — use with local echo on 9000.",
+      "protocol": "TCP",
+      "test_type": "connectivity",
+      "target_host": "127.0.0.1",
+      "target_port": 9000,
+      "timeout": 5.0,
+      "packet_count": 1,
+      "payload_size": 32,
+      "expected_result": "success",
+      "retry_count": 0,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "run_id": "sample_20260403_120000",
+  "generated_at": "2026-04-03 12:00:00 UTC",
+  "duration_sec": 0.52,
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0
+  },
+  "load_warnings": [],
+  "environment": {
+    "python_version": "3.13.x",
+    "platform": "Windows-11",
+    "hostname": "example-workstation",
+    "cpu_count_logical": 16,
+    "ram_total_mb": 32768.0
+  },
+  "tests": [
+    {
+      "test_id": "TCP-BASE-001",
+      "name": "TCP echo connectivity",
+      "protocol": "TCP",
+      "status": "passed",
+      "duration_ms": 4.2,
+      "message": "TCP echo OK",
+      "retries_used": 1,
+      "metrics": {
+        "rtt_ms": 4.1,
+        "test_type_resolved": "connectivity"
+      },
+      "error_detail": null
+    }
+  ]
+}

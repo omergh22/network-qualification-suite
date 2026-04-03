@@ -1,0 +1,61 @@
+# Failure / stress reproduction — designed for: python main.py simulate --mode <MODE>
+# Auto-starts embedded local targets in the selected simulation mode.
+
+suite: failure_reproduction
+version: "1.0"
+description: >
+  Mix of positive path checks and negative tests. In modes like wrong_echo or packet_loss,
+  echo checks may fail — useful for debugging workflows and qualification reports.
+
+tests:
+  - test_id: FR-TCP-001
+    name: TCP echo (baseline path)
+    protocol: TCP
+    test_type: connectivity
+    target_host: "127.0.0.1"
+    target_port: 9000
+    timeout: 6.0
+    packet_count: 1
+    payload_size: 64
+    expected_result: success
+    retry_count: 2
+    enabled: true
+
+  - test_id: FR-UDP-001
+    name: UDP echo under stress conditions
+    protocol: UDP
+    test_type: roundtrip
+    target_host: "127.0.0.1"
+    target_port: 9001
+    timeout: 5.0
+    packet_count: 20
+    payload_size: 256
+    expected_result: success
+    retry_count: 1
+    enabled: true
+
+  - test_id: FR-NEG-TCP-001
+    name: TCP connection refused (no listener)
+    protocol: TCP
+    test_type: connection_refused
+    target_host: "127.0.0.1"
+    target_port: 59999
+    timeout: 2.0
+    packet_count: 1
+    payload_size: 16
+    expected_result: success
+    retry_count: 0
+    enabled: true
+
+  - test_id: FR-NEG-HOST-001
+    name: Unreachable documentation address
+    protocol: TCP
+    test_type: unreachable_host
+    target_host: "192.0.2.1"
+    target_port: 80
+    timeout: 3.0
+    packet_count: 1
+    payload_size: 16
+    expected_result: success
+    retry_count: 0
+    enabled: true

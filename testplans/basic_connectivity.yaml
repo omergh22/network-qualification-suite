@@ -1,0 +1,50 @@
+# Baseline qualification — run with: python main.py serve
+# Then: python main.py run --plan testplans/basic_connectivity.yaml
+
+suite: basic_connectivity
+version: "1.0"
+description: >
+  Core TCP/UDP reachability and echo checks against local lab targets (127.0.0.1:9000/9001).
+
+tests:
+  - test_id: TCP-BASE-001
+    name: TCP echo connectivity
+    description: Single connection, send/receive payload against echo target.
+    protocol: TCP
+    test_type: connectivity
+    target_host: "127.0.0.1"
+    target_port: 9000
+    timeout: 5.0
+    packet_count: 1
+    payload_size: 128
+    expected_result: success
+    retry_count: 1
+    enabled: true
+
+  - test_id: TCP-BASE-002
+    name: TCP connection stability (short burst)
+    description: Repeated connects to stress listen backlog and socket teardown paths.
+    protocol: TCP
+    test_type: stability
+    target_host: "127.0.0.1"
+    target_port: 9000
+    timeout: 5.0
+    packet_count: 8
+    payload_size: 256
+    expected_result: success
+    retry_count: 0
+    enabled: true
+
+  - test_id: UDP-BASE-001
+    name: UDP echo round-trip
+    description: Send multiple UDP datagrams; expect byte-identical echo.
+    protocol: UDP
+    test_type: roundtrip
+    target_host: "127.0.0.1"
+    target_port: 9001
+    timeout: 3.0
+    packet_count: 12
+    payload_size: 512
+    expected_result: success
+    retry_count: 1
+    enabled: true
